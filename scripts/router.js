@@ -1,12 +1,61 @@
 // router.js
 
 export const router = {};
+let pageCounter = 1;
 
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
-  /**
+router.setState = function(state, element, entryID) {
+  if (state == "Home"){
+    //console.log("returning home");
+
+    let myBody = document.querySelector("body");
+    myBody.className = "";
+
+    let myHeader = document.querySelector("h1");
+    myHeader.innerHTML = "Journal Entries";
+  
+  } else if (state == "Settings"){
+    console.log("Settings");
+    cleanUpEntryPage();
+
+    let myBody = document.querySelector("body");
+    myBody.className = "settings";
+
+    let myHeader = document.querySelector("h1");
+    myHeader.innerHTML = "Settings";
+  
+  } else if (state == "Entry"){
+    console.log("entry");
+    cleanUpEntryPage();
+
+    let myBody = document.querySelector("body");
+    myBody.className = "single-entry";
+
+    let myHeader = document.querySelector("h1");
+    myHeader.innerHTML = "Entry " + entryID;
+
+    let myEntryPage = document.querySelector("entry-page");
+    
+    myEntryPage.entry = element;
+
+  }
+
+  pageCounter++;
+}
+
+function cleanUpEntryPage(){
+  let myEntryPage = document.querySelector("entry-page");
+  let myBody = document.querySelector("body");
+
+  myBody.removeChild(myEntryPage);
+
+  let myNewEntryPage = document.createElement("entry-page");
+  myBody.appendChild(myNewEntryPage);
+}
+
+/**
    * - There are three states that your SPA app will have
    *    1. The home page
    *    2. The entry page (showing one individual entry)
@@ -35,4 +84,3 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
-}
